@@ -27,8 +27,7 @@ function Register() {
           <span>⚖</span>
         </div>
 
-        <h2>إنشاء حساب جديد</h2>
-        <p className="subtitle">لديك حساب بالفعل؟ سجل دخولك من هنا</p>
+        <h2>انشاء حساب جديد في منصة شهادة</h2>
 
         <form onSubmit={handleSubmit}>
           <p>الاسم الكامل</p>
