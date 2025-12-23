@@ -5,6 +5,16 @@
    ========================================= */
 
 /* ---------- Design tokens ---------- */
+html, body {
+  height: 100%;
+  overflow: hidden; /* prevents scrolling */
+}
+
+#root{
+  height: 100vh;     /* lock to viewport */
+  overflow: hidden;  /* extra safety */
+}
+
 :root {
   --bg-0: #000;
   --bg-1: #0b0f1a;
@@ -71,7 +81,7 @@ body {
   border: 1px solid var(--stroke);
   background: linear-gradient(180deg, var(--card-1) 0%, var(--card-0) 100%);
   box-shadow: var(--shadow);
-
+  margin-bottom: 100px;
   text-align: center;
   direction: rtl;
 
@@ -211,32 +221,188 @@ body {
   text-decoration: underline;
 }
 
-/* ---------- Responsive tweaks ---------- */
-@media (max-width: 420px) {
+/* ---------- Responsive (phones + tablets) ---------- */
+
+/* Tablets (portrait/landscape) */
+@media (max-width: 1024px) {
+  #root {
+    padding: 24px;
+    place-items: start center; /* top-ish on tablets, more natural */
+  }
+
   .container {
-    width: 100%;
+    width: min(92vw, 520px); /* a bit wider on tablets */
+    padding: 26px;
   }
 
   .container h2 {
-    font-size: 13px;
-    margin-bottom: 18px;
+    font-size: 15px;
   }
 
   .container input {
-    height: 42px; /* better touch */
+    height: 44px;
     font-size: 14px;
   }
 
   .container button {
-    height: 44px;
+    height: 46px;
     font-size: 14px;
   }
 }
 
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .container input,
-  .container button {
-    transition: none;
+/* Small tablets / big phones */
+@media (max-width: 768px) {
+  #root {
+    padding: 18px;
+    place-items: center; /* center again */
   }
+
+  .container {
+    width: min(94vw, 480px);
+    padding: 22px;
+    border-radius: 12px;
+  }
+
+  .container h2 {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .container form {
+    gap: 10px;
+  }
+
+  .container input {
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .container button {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .container > p,
+  .container a {
+    font-size: 13px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  #root {
+    padding: 14px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .container > div:first-child {
+    margin-bottom: 14px;
+  }
+
+  .container h2 {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .container form p {
+    font-size: 12px;
+  }
+
+  .container input {
+    height: 48px; /* best for touch */
+    font-size: 15px;
+    padding: 0 12px;
+  }
+
+  .container button {
+    height: 50px;
+    font-size: 15px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .container {
+    padding: 16px;
+  }
+
+  .container h2 {
+    font-size: 12.5px;
+  }
+
+  .container input {
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .container button {
+    height: 48px;
+    font-size: 14px;
+  }
+}
+/* ===============================
+   AUTH OVERRIDES (balanced size + visual center + no scroll)
+   Put at END of login.css
+================================ */
+
+html, body{
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Center but slightly higher (visual center) */
+#root{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+}
+
+/* Move card a bit up (looks centered with your background glow) */
+.container{
+  width: min(92vw, 460px);   /* NOT huge */
+  padding: 26px;
+
+  transform: translateY(-18px); /* visual centering */
+}
+
+/* Touch-friendly but not chunky */
+.container input{
+  height: 44px;
+  font-size: 14px;
+}
+
+.container button{
+  height: 46px;
+  font-size: 14px;
+}
+
+/* Tablets: slightly wider only */
+@media (min-width: 768px) and (max-width: 1024px){
+  .container{
+    width: min(86vw, 500px);
+    padding: 28px;
+  }
+}
+
+/* Phones: full width and remove the translate up a bit */
+@media (max-width: 420px){
+  #root{ padding: 12px; }
+
+  .container{
+    width: 100%;
+    padding: 18px;
+    transform: translateY(-10px);
+  }
+
+  .container input{ height: 46px; }
+  .container button{ height: 48px; }
 }
