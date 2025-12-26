@@ -5,15 +5,6 @@
    ========================================= */
 
 /* ---------- Design tokens ---------- */
-html, body {
-  height: 100%;
-  overflow: hidden; /* prevents scrolling */
-}
-
-#root{
-  height: 100vh;     /* lock to viewport */
-  overflow: hidden;  /* extra safety */
-}
 
 :root {
   --bg-0: #000;
@@ -298,6 +289,7 @@ body {
     width: 100%;
     padding: 18px;
     border-radius: 12px;
+    margin-bottom: 200px;
   }
 
   .container > div:first-child {
@@ -350,14 +342,14 @@ body {
    Put at END of login.css
 ================================ */
 
-html, body{
+.Home{
   height: 100%;
   margin: 0;
   overflow: hidden;
 }
 
 /* Center but slightly higher (visual center) */
-#root{
+.Home{
   height: 100vh;
   display: flex;
   align-items: center;
