@@ -8,6 +8,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import MyPagination from './Componants/Pagination'
 import CrimeDeatails from './Pages/CrimeDetails'
 import ExploreCrimes from './Pages/ExploreCrimes'
+import UserDashboard from './Pages/UserDashboard'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        <Route path = "/UserDashBoard/:username" element={<UserDashboard/>}/>
         <Route path = "ExploreCrimes" element={<ExploreCrimes/>}/>
         <Route path = "CrimeDetails/:id" element={<CrimeDeatails/>}/>
         <Route path = "page" element={<MyPagination/>}/>
