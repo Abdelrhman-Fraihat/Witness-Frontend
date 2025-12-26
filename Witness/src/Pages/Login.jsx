@@ -18,7 +18,7 @@ function Login()
     }
     
     return(
-        <div>
+        <div className="Home">
             <div className="container">
             <div>
                 <span>Witness</span>

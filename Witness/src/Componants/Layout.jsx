@@ -16,9 +16,7 @@ function Layout() {
         </nav>
       </header>
 
-      <main style={{ paddingTop: "58px" }}>
       <Outlet />
-    </main>
 
       <footer className="footer" dir="rtl">
         <div className="footer__container">
