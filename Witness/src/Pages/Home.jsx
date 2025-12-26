@@ -1,6 +1,7 @@
 import react from "react";
 import Layout from "../Componants/Layout";
 import "../Style/pages/Home.css";
+import {Link} from "react-router-dom"
 let crimes = [
   {
     id: 1,
@@ -58,7 +59,7 @@ function Home() {
           </p>
           <div className="intro_button">
             <button className="btn primary">أضف جريمة</button>
-            <button className="btn outline">استعراض الجرائم</button>
+            <Link to =  {`/ExploreCrimes/`} className="btn outline">استعراض الجرائم</Link>
           </div>
         </section>
 
@@ -108,10 +109,10 @@ function Home() {
                   </p>
                 </section>
 
-                <button>
+                <Link to = {`/CrimeDetails/${crime.id}`} className="button">
                   <i className="bi bi-box-arrow-up-right"></i>
                   عرض التفاصيل
-                </button>
+                </Link>
               </div>
             ))}
           </div>

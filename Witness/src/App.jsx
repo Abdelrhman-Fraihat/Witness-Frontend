@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path = "ExploreCrimes" element={<ExploreCrimes/>}/>
-        <Route path = "CrimeDetails" element={<CrimeDeatails/>}/>
+        <Route path = "CrimeDetails/:id" element={<CrimeDeatails/>}/>
         <Route path = "page" element={<MyPagination/>}/>
         <Route path = "Home" element={<Home/>}/>
         <Route path = "Layout" element={<Layout/>}/>

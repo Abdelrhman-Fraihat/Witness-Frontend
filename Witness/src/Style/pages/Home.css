@@ -58,6 +58,7 @@
   background: transparent;
   border: 1px solid rgba(255,255,255,0.25);
   color: #fff;
+  text-decoration: none;
 }
 
 .btn.outline:hover{
@@ -139,7 +140,7 @@
 }
 
 /* Button icon */
-.crime-card button{
+.crime-card .button{
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -209,7 +210,7 @@
 }
 
 /* Crime Button */
-.crime-card button{
+.crime-card .button{
   margin-top: 18px;
   align-self: flex-start;
 
@@ -225,7 +226,7 @@
   transition: 0.2s ease;
 }
 
-.crime-card button:hover{
+.crime-card .button:hover{
   border-color: #5865f2;
   color: #5865f2;
 }

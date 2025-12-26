@@ -1,17 +1,29 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom"
 import CrimesFilter from "../Componants/CrimesFilter";
 import MyPagination from "../Componants/Pagination";
-import "../Style/pages/CrimeDetails.css";
+import "../Style/pages/ExploreCrimes.css";
 import Layout from "../Componants/Layout";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import CrimeDeatails from "./CrimeDetails";
 
 const crimes = [
-  {
+   {
     id: 1,
     title: "قصف حي سكني في غزة",
     description: "استهداف مباشر لمنازل المدنيين دون سابق انذار",
     date: "2023-10-25",
     location: "غزة",
+
+    longDescription:
+      "اكتب هنا وصفًا تفصيليًا طويلًا للجريمة (مثل النص الموجود في الصورة).",
+    images: [
+      "/images/crimes/1-1.jpg",
+      "/images/crimes/1-2.jpg",
+      "/images/crimes/1-3.jpg",
+    ],
+    reporter: "أحمد منصور",
+    stateOfReport: "موثق",
   },
   {
     id: 2,
@@ -246,10 +258,10 @@ function ExploreCrimes() {
               </p>
             </section>
 
-            <button>
+            <Link  to = {`/CrimeDetails/${crime.id}`} className="button">
               <i className="bi bi-box-arrow-up-right"></i>
               عرض التفاصيل
-            </button>
+            </Link>
           </div>
         ))}
       </div>
