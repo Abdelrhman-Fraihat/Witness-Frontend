@@ -16,7 +16,9 @@ function Layout() {
         </nav>
       </header>
 
+      <main>
       <Outlet />
+    </main>
 
       <footer className="footer" dir="rtl">
         <div className="footer__container">

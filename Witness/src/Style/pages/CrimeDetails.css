@@ -1,113 +1,199 @@
-/* CrimeDetails cards area */
-.cards-grid {
-  max-width: 1150px;
-  margin: 0 auto;
+/* =========================
+   CrimeDetails.css (cd-*)
+   Target: match screenshot exactly
+   ========================= */
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 26px;
-
-  direction: rtl;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* Card */
-.crime-card {
-  background: linear-gradient(180deg, #1b1f26, #14171c);
-  border-radius: 10px;
-  padding: 22px;
-  text-align: right;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  direction: rtl;
+  font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* Page */
+.cd-page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  padding: 22px 0 70px;
+}
+
+/* Center container */
+.cd-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Wrapper (no big outer frame) */
+.cd-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 /* Title */
-.crime-info h4 {
-  font-size: 15px;
+.cd-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900;
+  margin: 8px 0 18px;
+  letter-spacing: 0.2px;
+}
+
+/* =========================
+   Info bar (ONE strip)
+   ========================= */
+.cd-info-bar {
+  background: #1c222b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 18px;
+}
+
+/* each item */
+.cd-info-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  align-content: start;
+}
+
+.cd-label {
+  font-size: 13px;
   font-weight: 800;
-  margin-bottom: 10px;
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
 }
 
-/* meta row (location + date) */
-.crime-meta {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin: 6px 0 0;
-}
-
-.crime-meta p {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.crime-meta i {
-  color: #5865f2;
-  font-size: 13px;
-}
-
-/* description line with icon */
-.crime-info .description {
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.85);
-
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.crime-info .description i {
-  color: #5865f2;
+.cd-value {
   font-size: 14px;
-  margin-top: 2px;
-}
-
-/* button like screenshot (bottom-left) */
-.crime-card button {
-  margin-top: 18px;
-  align-self: flex-start;
-
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-weight: 900;
   color: #fff;
+}
 
-  padding: 7px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 4px;
+.cd-state {
+  color: #6bff9a;
+}
+
+/* =========================
+   Cards (Details + Images)
+   ========================= */
+.cd-details-card,
+.cd-images-card {
+  margin-top: 18px;
+  background: #222831;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 18px 18px 20px;
+}
+
+/* Section titles (right aligned like screenshot) */
+.cd-section-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #fff;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+/* thin line under title (like screenshot) */
+.cd-section-title::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 150px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+}
+
+/* Details text */
+.cd-details-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.95;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* =========================
+   Images grid (3 thumbnails)
+   ========================= */
+.cd-images-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cd-img-box {
+  height: 250px; /* matches screenshot proportion */
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0f141b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cd-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Back button (simple, unobtrusive) */
+.cd-back-btn {
+  margin: 18px auto 0;
+  display: block;
+  width: 190px;
+  padding: 10px 0;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
   cursor: pointer;
-  transition: 0.2s ease;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
 
-.crime-card button:hover {
-  border-color: #5865f2;
-  color: #5865f2;
+.cd-back-btn:hover {
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 900px;
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 992px) {
+  .cd-info-bar {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+  .cd-images-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 640px) {
-  .cards-grid {
+@media (max-width: 560px) {
+  
+  .cd-title {
+    font-size: 22px;
+  }
+  .cd-info-bar {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+  .cd-images-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0 14px;
+  }
+  .cd-img-box {
+    height: 190px;
   }
 }

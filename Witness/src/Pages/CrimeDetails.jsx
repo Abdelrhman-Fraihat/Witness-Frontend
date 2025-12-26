@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CrimesFilter from "../Componants/CrimesFilter";
-import MyPagination from "../Componants/Pagination";
 import "../Style/pages/CrimeDetails.css";
 import Layout from "../Componants/Layout";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useParams } from "react-router-dom";
+import Book from "../Style/assets/Book.jpg";
 
 const crimes = [
   {
@@ -12,6 +12,16 @@ const crimes = [
     description: "استهداف مباشر لمنازل المدنيين دون سابق انذار",
     date: "2023-10-25",
     location: "غزة",
+
+    longDescription:
+      "في مساء يوم الثلاثاء، 17 أكتوبر 2023، تعرض مستشفى المعمداني في غزة لقصف جوي وحشي، مما أسفر عن استشهاد المئات من المدنيين، غالبيتهم من النساء والأطفال، الذين كانوا يلتمسون الأمان داخل المستشفى. كانت هذه المؤسسة الطبية تأوي الآلاف من النازحين الفارين من القصف المستمر في أنحاء القطاع. الهجوم أسفر عن دمار واسع في المبنى واندلاع حرائق كبيرة، مما أدى إلى كارثة إنسانية مروعة. هذا العمل يمثل انتهاكًا صارخًا للقانون الدولي الإنساني الذي يحمي المنشآت الطبية والمدنيين في أوقات النزاع. شهادات من الناجين تفيد بأن القصف كان مفاجئاً وبلا سابق إنذار، حيث تحولت ساحة المستشفى ومبانيه إلى ركام في غضون لحظات. فرق الإسعاف والدفاع المدني واجهت صعوبة بالغة في الوصول إلى الموقع بسبب استمرار القصف والدمار الواسع، مما أدى إلى تفاقم الأوضاع الإنسانية. وقد أدانت منظمات حقوق الإنسان الدولية بشدة هذا الهجوم، مطالبة بتحقيق فوري ومحاسبة المسؤولين عن هذه الجريمة الشنيعة. يعتبر استهداف المستشفيات والمرافق الطبية جريمة حرب بموجب اتفاقيات جنيف.",
+    images: [
+      "../Style/assets/Book.jpg",
+      "/images/crimes/1-2.jpg",
+      "/images/crimes/1-3.jpg",
+    ],
+    reporter: "أحمد منصور",
+    stateOfReport: "موثق",
   },
   {
     id: 2,
@@ -177,88 +187,60 @@ const crimes = [
 ];
 
 function CrimeDeatails() {
-  const ItemPerPage = 9;
-  const [location, setLocation] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  let filteredCrimes = crimes;
-
-  if (location !== "") {
-    filteredCrimes = filteredCrimes.filter(
-      (crime) => crime.location === location
-    );
-  }
-
-  if (startDate !== "" && endDate !== "") {
-    filteredCrimes = filteredCrimes.filter(
-      (crimes) => crimes.date >= startDate && crimes.date <= endDate
-    );
-  }
-
-  const totalPages = Math.ceil(filteredCrimes.length / ItemPerPage);
-  const start = (currentPage - 1) * ItemPerPage;
-  const end = start + ItemPerPage;
-  const visibleCrimes = filteredCrimes.slice(start, end);
-
-  function handelFilterChange(location, startDate, endDate) {
-    setLocation(location);
-    setStartDate(startDate);
-    setEndDate(endDate);
-    setCurrentPage(1);
-  }
-
-  function handlePageChange(pageNumber) {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0 });
-  }
-
+  const { id } = useParams();
+  const crime = crimes.find((c) => String(c.id) === String(id));
   return (
     <>
-      <CrimesFilter
-        location={location}
-        startDate={startDate}
-        endDate={endDate}
-        onchange={handelFilterChange}
-      />
+      <div className="cd-page">
+        <div className="cd-container">
+          <div className="cd-wrapper">
+            {/* ===== Title ===== */}
+            <h1 className="cd-title">{crime.title}</h1>
 
-      <div className="cards-grid">
-        {visibleCrimes.map((crime) => (
-          <div className="crime-card" key={crime.id}>
-            <section className="crime-info">
-              <h4>{crime.title}</h4>
-
-              <div className="crime-meta">
-                <p className="location">
-                  <i className="bi bi-geo-alt"></i>
-                  {crime.location}
-                </p>
-
-                <p className="date">
-                  <i className="bi bi-calendar3"></i>
-                  {crime.date}
-                </p>
+            {/* ===== Info Section ===== */}
+            <div className="cd-info-bar">
+              <div className="cd-info-item">
+                <span className="cd-label">التاريخ</span>
+                <span className="cd-value">{crime.date}</span>
               </div>
 
-              <p className="description">
-                <i className="bi bi-file-text"></i>
-                {crime.description}
-              </p>
-            </section>
+              <div className="cd-info-item">
+                <span className="cd-label">الموقع</span>
+                <span className="cd-value">{crime.location}</span>
+              </div>
 
-            <button>
-              <i className="bi bi-box-arrow-up-right"></i>
-              عرض التفاصيل
-            </button>
+              <div className="cd-info-item">
+                <span className="cd-label">حالة التقرير</span>
+                <span className="cd-value cd-state">{crime.stateOfReport}</span>
+              </div>
+
+              <div className="cd-info-item">
+                <span className="cd-label">المراسل</span>
+                <span className="cd-value">{crime.reporter}</span>
+              </div>
+            </div>
+
+            {/* ===== Details ===== */}
+            <div className="cd-details-card">
+              <h3 className="cd-section-title">تفاصيل الجريمة</h3>
+              <p className="cd-details-text">{crime.longDescription}</p>
+            </div>
+
+            {/* ===== Images ===== */}
+            <div className="cd-images-card">
+              <h3 className="cd-section-title">صور وتوضيحات</h3>
+
+              <div className="cd-images-grid">
+                {crime.images.map((img, index) => (
+                  <div className="cd-img-box" key={index}>
+                    <img className="cd-img" src={Book} alt={`crime-${index}`} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
-
-      <MyPagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
       <Layout />
     </>
   );

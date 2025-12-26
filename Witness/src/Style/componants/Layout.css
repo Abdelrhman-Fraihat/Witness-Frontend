@@ -4,12 +4,7 @@ html, body {
   margin: 0;
 }
 
-#root {
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-}
-
+s
 .footer {
   margin-top: 0;
 }
