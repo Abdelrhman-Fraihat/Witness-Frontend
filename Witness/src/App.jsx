@@ -10,6 +10,7 @@ import CrimeDeatails from './Pages/CrimeDetails'
 import ExploreCrimes from './Pages/ExploreCrimes'
 import UserDashboard from './Pages/UserDashboard'
 import MyReports from "./Pages/MyReports"
+import AddEditCrime from "./Pages/AddEditCrime"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        <Route path = "AddEditCrime" element={<AddEditCrime/>}/>
         <Route path = "MyReports" element={<MyReports/>}/>
         <Route path = "/UserDashBoard/:username" element={<UserDashboard/>}/>
         <Route path = "ExploreCrimes" element={<ExploreCrimes/>}/>
