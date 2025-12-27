@@ -9,6 +9,7 @@ import MyPagination from './Componants/Pagination'
 import CrimeDeatails from './Pages/CrimeDetails'
 import ExploreCrimes from './Pages/ExploreCrimes'
 import UserDashboard from './Pages/UserDashboard'
+import MyReports from "./Pages/MyReports"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        <Route path = "MyReports" element={<MyReports/>}/>
         <Route path = "/UserDashBoard/:username" element={<UserDashboard/>}/>
         <Route path = "ExploreCrimes" element={<ExploreCrimes/>}/>
         <Route path = "CrimeDetails/:id" element={<CrimeDeatails/>}/>
