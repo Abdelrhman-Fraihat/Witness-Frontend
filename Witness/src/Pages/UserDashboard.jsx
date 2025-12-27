@@ -53,7 +53,6 @@ function UserDashboard() {
                 <th>النوع</th>
                 <th>التاريخ</th>
                 <th>الحالة</th>
-                <th>الإجراءات</th>
               </tr>
             </thead>
 
@@ -63,7 +62,6 @@ function UserDashboard() {
                 <td>قصف</td>
                 <td>2023-11-20</td>
                 <td className="status approved">موثق</td>
-                <td><a href="#">عرض التفاصيل</a></td>
               </tr>
 
               <tr>
@@ -71,7 +69,6 @@ function UserDashboard() {
                 <td>غارات جوية</td>
                 <td>2023-11-15</td>
                 <td className="status pending">قيد المراجعة</td>
-                <td><a href="#">عرض التفاصيل</a></td>
               </tr>
 
               <tr>
@@ -79,7 +76,6 @@ function UserDashboard() {
                 <td>قصف</td>
                 <td>2023-11-10</td>
                 <td className="status approved">موثق</td>
-                <td><a href="#">عرض التفاصيل</a></td>
               </tr>
 
               <tr>
@@ -87,7 +83,6 @@ function UserDashboard() {
                 <td>قصف</td>
                 <td>2023-11-05</td>
                 <td className="status rejected">مرفوض</td>
-                <td><a href="#">عرض التفاصيل</a></td>
               </tr>
 
               <tr>
@@ -95,7 +90,6 @@ function UserDashboard() {
                 <td>غارات جوية</td>
                 <td>2023-11-01</td>
                 <td className="status approved">موثق</td>
-                <td><a href="#">عرض التفاصيل</a></td>
               </tr>
             </tbody>
           </table>
