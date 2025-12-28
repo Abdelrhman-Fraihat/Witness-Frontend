@@ -11,6 +11,8 @@ import ExploreCrimes from './Pages/ExploreCrimes'
 import UserDashboard from './Pages/UserDashboard'
 import MyReports from "./Pages/MyReports"
 import AddEditCrime from "./Pages/AddEditCrime"
+import AdminDashboard from './Pages/Admin/AdminDashboard'
+import UserFilter from './Componants/UserFilter'
 
 function App() {
 
@@ -18,6 +20,8 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        <Route path = "UserFilter" element={<UserFilter/>}/>
+        <Route path = "AdminDashboard" element={<AdminDashboard/>}/>
         <Route path = "AddEditCrime" element={<AddEditCrime/>}/>
         <Route path = "MyReports" element={<MyReports/>}/>
         <Route path = "/UserDashBoard/:username" element={<UserDashboard/>}/>
@@ -31,7 +35,9 @@ function App() {
         <Route path = "*" element={<Login/>}/>
       </Routes>
     </BrowserRouter>
+
     </>
+    
   )
 }
 

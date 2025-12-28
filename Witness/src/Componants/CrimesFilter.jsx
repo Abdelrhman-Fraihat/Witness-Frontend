@@ -14,33 +14,33 @@ function CrimesFilter({ location, startDate, endDate, onchange }) {
   }
 
   return (
-  <>
-<h1>الجرائم الموثقة</h1>
-   <div className="crimes-filter">
-  <select value={location} onChange={onLocationChange}> 
-    <option value="">جميع المناطق</option>
-    <option value="غزة">غزة</option>
-    <option value="رفح">رفح</option>
-    <option value="خان يونس">خان يونس</option>
-  </select>
+    <>
+      <h1>الجرائم الموثقة</h1>
+      <div className="crimes-filter">
+        <select value={location} onChange={onLocationChange}>
+          <option value="">جميع المناطق</option>
+          <option value="غزة">غزة</option>
+          <option value="رفح">رفح</option>
+          <option value="خان يونس">خان يونس</option>
+        </select>
 
-  <div className="date-input">
-    <span className="inside-label">من</span>
-    <input
-      type="date"
-      value={startDate}
-      onChange={onStartDateChange}
-    />
-  </div>
+        <div className="date-input">
+          <span className="inside-label">من</span>
+          <input type="date" value={startDate} onChange={onStartDateChange} />
+        </div>
 
-  <div className="date-input">
-    <span className="inside-label">إلى</span>
-<input type="date" placeholder="Choose a Date" required />
-
-  </div>
-
-</div>
-</>
+        <div className="date-input">
+          <span className="inside-label">إلى</span>
+          <input
+            type="date"
+            value={endDate}
+            onChange={onEndDateChange}
+            placeholder="Choose a Date"
+            required
+          />
+        </div>
+      </div>
+    </>
   );
 }
 
