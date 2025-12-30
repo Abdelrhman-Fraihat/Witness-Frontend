@@ -1,19 +1,14 @@
 import React from "react";
-import "../Style/componants/crimeFilter.css";
+import "../Style/componants/UserFilter.css"
 
-function UserFilter({ user, onUserChange }) {
+function UserFilter({ value, onChange }) {
   return (
-    <>
-      <div className="crime-filter">
-        <input
-          type="text"
-          value={user}
-          onChange={onUserChange}
-          placeholder="البحث عن مستخدم"
-          required
-        />
-      </div>
-    </>
+    <input
+      type="text"
+      placeholder="ابحث بالاسم..."
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 
