@@ -107,7 +107,6 @@ function AddEditCrime() {
 
       </div>
     </div>
-    <Layout/>
     </>
   );
 }

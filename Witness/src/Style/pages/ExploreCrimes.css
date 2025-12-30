@@ -1,4 +1,7 @@
 /* CrimeDetails cards area */
+h1 {
+  margin-top: 50px;
+}
 .cards-grid {
   max-width: 1150px;
   margin: 0 auto;

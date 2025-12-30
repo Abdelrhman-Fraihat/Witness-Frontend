@@ -97,7 +97,6 @@ function UserDashboard() {
 
       </div>
     </div>
-    <Layout/>
     </>
   );
 }

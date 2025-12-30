@@ -1,32 +1,49 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "../Style/componants/Layout.css";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 function Layout() {
   return (
     <>
-      <header className="topbar">
-        <nav className="nav" dir="">
-          <div className="nav__links">
-            <Link to="/home">الصفحة الرئيسية</Link>
-            <Link to="/CrimeDeatails">استعراض الجرائم</Link>
-          </div>
+      <Navbar
+        expand="lg"
+        bg="1f232b"
+        variant="dark"
+        className="admin-navbar w-100"
+        dir="rtl"
+      >
+        <Container fluid className="px-3">
+          <Navbar.Brand className="fw-bold" href="#">
+  
+          </Navbar.Brand>
 
-          <Link to="/login">تسجيل الدخول</Link>
-        </nav>
-      </header>
+          <Navbar.Toggle
+            aria-controls="mainNavbar"
+            className="shadow-none border-0"
+          />
 
-      <main>
-      <Outlet />
-    </main>
+          <Navbar.Collapse id="mainNavbar" className="justify-content-start">
+            <Nav className="gap-4">
+              <Nav.Link href="home">الرئيسية</Nav.Link>
+              <Nav.Link href="ExploreCrimes">استعراض جميع الجرائم</Nav.Link>
+              <Nav.Link href="MyReports">تقاريري</Nav.Link>
+              <Nav.Link href= "#">الملف الشخصي</Nav.Link>
+              
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+        <Outlet />
 
       <footer className="footer" dir="rtl">
         <div className="footer__container">
           <div className="footer__grid">
             <div className="footer__col footer__brand">
-              <p>
-                منصة لتوثيق جرائم الاحتلال الإسرائيلي بحق المدنيين.
-              </p>
+              <p>منصة لتوثيق جرائم الاحتلال الإسرائيلي بحق المدنيين.</p>
             </div>
 
             <div className="footer__col">
