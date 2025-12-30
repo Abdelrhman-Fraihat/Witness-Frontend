@@ -96,7 +96,6 @@ function MyReports() {
         </div>
       </div>
     </div>
-    <Layout/>
     </>
   );
 }

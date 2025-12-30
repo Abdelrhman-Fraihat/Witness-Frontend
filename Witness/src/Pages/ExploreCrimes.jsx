@@ -271,7 +271,6 @@ function ExploreCrimes() {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-      <Layout />
     </>
   );
 }

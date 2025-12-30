@@ -241,7 +241,6 @@ function CrimeDeatails() {
           </div>
         </div>
       </div>
-      <Layout />
     </>
   );
 }

@@ -118,7 +118,6 @@ function Home() {
           </div>
         </section>
       </div>
-      <Layout />
     </>
   );
 }

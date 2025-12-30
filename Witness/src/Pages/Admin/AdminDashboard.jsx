@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "../../Style/Admin/AdminDashboard.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import AdminNavBar from "../../Componants/AdminNavBar";
-// assume you already have these
 import CrimesFilter from "../../Componants/CrimesFilter";
 import Pagination from "../../Componants/Pagination";
 
@@ -147,9 +145,6 @@ function AdminDashboard() {
     <AdminNavBar/>
       <div className="admin-dashboard-page">
         <div className="admin-dashboard-container">
-          <div className="admin-dashboard-header">
-            <h2>لوحة تحكم المشرف</h2>
-          </div>
           <div className="admin-stats-grid">
             <div className="admin-stat-card">
               <div className="admin-stat-icon">
