@@ -16,9 +16,7 @@ function Layout() {
         dir="rtl"
       >
         <Container fluid className="px-3">
-          <Navbar.Brand className="fw-bold" href="#">
-  
-          </Navbar.Brand>
+          <Navbar.Brand className="fw-bold" href="#"></Navbar.Brand>
 
           <Navbar.Toggle
             aria-controls="mainNavbar"
@@ -27,17 +25,24 @@ function Layout() {
 
           <Navbar.Collapse id="mainNavbar" className="justify-content-start">
             <Nav className="gap-4">
-              <Nav.Link href="home">الرئيسية</Nav.Link>
-              <Nav.Link href="ExploreCrimes">استعراض جميع الجرائم</Nav.Link>
-              <Nav.Link href="MyReports">تقاريري</Nav.Link>
-              <Nav.Link href= "#">الملف الشخصي</Nav.Link>
-              
+              <Nav.Link as={Link} to="/home">
+                الرئيسية
+              </Nav.Link>
+              <Nav.Link as={Link} to="/ExploreCrimes">
+                استعراض جميع الجرائم
+              </Nav.Link>
+              <Nav.Link as={Link} to="/MyReports">
+                تقاريري
+              </Nav.Link>
+              <Nav.Link as={Link} to="/UserDashBoard/عبدالرحمن">
+                الملف الشخصي
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-        <Outlet />
+      <Outlet />
 
       <footer className="footer" dir="rtl">
         <div className="footer__container">

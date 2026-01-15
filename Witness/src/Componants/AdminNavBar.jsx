@@ -7,7 +7,7 @@ function AdminNavBar() {
         <nav className="nav" dir="">
           <div className="nav__links">
             <Link to="/AdminDashboard">الصفحة الرئيسية</Link>
-            <Link to="/ManageUsers">استعراض الجرائم</Link>
+            <Link to="/ManageUsers">استعراض جميع المستخدمين</Link>
           </div>
 
         </nav>

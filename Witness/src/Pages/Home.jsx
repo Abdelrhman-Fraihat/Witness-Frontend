@@ -1,7 +1,8 @@
 import react from "react";
+import { useState, useEffect } from "react";
 import Layout from "../Componants/Layout";
 import "../Style/pages/Home.css";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 let crimes = [
   {
     id: 1,
@@ -48,8 +49,34 @@ let crimes = [
 ];
 
 function Home() {
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      "https://newsapi.org/v2/everything?q=Gaza&language=ar&apiKey=af7fcad65adb4774bd67ad77d15dda8f"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setNews(data.articles);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+
+  useEffect(() => {
+    if (news.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentNewsIndex((prev) => (prev + 1) % news.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [news]);
+
   return (
     <>
+      <br />
       <div className="home">
         <section className="intro">
           <h1>شاهد على الحقيقة: توثيق جرائم الاحتلال</h1>
@@ -59,8 +86,16 @@ function Home() {
           </p>
           <div className="intro_button">
             <button className="btn primary">أضف جريمة</button>
-            <Link to =  {`/ExploreCrimes/`} className="btn outline">استعراض الجرائم</Link>
+            <Link to={`/ExploreCrimes/`} className="btn outline">
+              استعراض الجرائم
+            </Link>
           </div>
+          <br />
+          {news.length > 0 && (
+            <span key={currentNewsIndex} className="ticker-item animate">
+              {news[currentNewsIndex].title}
+            </span>
+          )}
         </section>
 
         <section className="stats">
@@ -109,7 +144,7 @@ function Home() {
                   </p>
                 </section>
 
-                <Link to = {`/CrimeDetails/${crime.id}`} className="button">
+                <Link to={`/CrimeDetails/${crime.id}`} className="button">
                   <i className="bi bi-box-arrow-up-right"></i>
                   عرض التفاصيل
                 </Link>

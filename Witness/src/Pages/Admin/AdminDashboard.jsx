@@ -3,6 +3,8 @@ import "../../Style/Admin/AdminDashboard.css";
 import AdminNavBar from "../../Componants/AdminNavBar";
 import CrimesFilter from "../../Componants/CrimesFilter";
 import Pagination from "../../Componants/Pagination";
+import AdminCrimeReview from "../../Pages/Admin/AdminCrimeReview";
+import {Link} from "react-router-dom"
 
 function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -236,7 +238,9 @@ function AdminDashboard() {
                       </span>
                     </td>
                     <td className="admin-actions">
+                      <Link to = {`/AdminDashboard/AdminCrimeReview/${crime.id}`}>
                       <i className="bi bi-eye"></i>
+                      </Link>
                       <i className="bi bi-check-lg"></i>
                       <i className="bi bi-x-lg"></i>
                     </td>

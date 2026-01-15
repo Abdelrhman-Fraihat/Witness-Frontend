@@ -58,41 +58,42 @@ function MyReports() {
 
         {/* ===== Table ===== */}
         <div className="reports-table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>الإجراءات</th>
-                <th>الحالة</th>
-                <th>التاريخ</th>
-                <th>النوع</th>
-                <th>العنوان</th>
-              </tr>
-            </thead>
+    <table>
+  <thead>
+    <tr>
+      <th>العنوان</th>
+      <th>النوع</th>
+      <th>التاريخ</th>
+      <th>الحالة</th>
+      <th>الإجراءات</th>
+    </tr>
+  </thead>
 
-            <tbody>
-              {reports.map((report) => (
-                <tr key={report.id}>
-                  <td className="actions">
-                    <i className="bi bi-eye"></i>
-                    <i className="bi bi-pencil"></i>
-                    <i className="bi bi-trash"></i>
-                  </td>
+  <tbody>
+    {reports.map((report) => (
+      <tr key={report.id}>
+        <td>{report.title}</td>
+        <td>{report.type}</td>
+        <td>{report.date}</td>
 
-                  <td>
-                    <span className={`status ${report.status}`}>
-                      {report.status === "accepted" && "مقبول"}
-                      {report.status === "pending" && "قيد المراجعة"}
-                      {report.status === "rejected" && "مرفوض"}
-                    </span>
-                  </td>
+        <td>
+          <span className={`status ${report.status}`}>
+            {report.status === "accepted" && "مقبول"}
+            {report.status === "pending" && "قيد المراجعة"}
+            {report.status === "rejected" && "مرفوض"}
+          </span>
+        </td>
 
-                  <td>{report.date}</td>
-                  <td>{report.type}</td>
-                  <td>{report.title}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <td className="actions">
+          <i className="bi bi-eye"></i>
+          <i className="bi bi-pencil"></i>
+          <i className="bi bi-trash"></i>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
         </div>
       </div>
     </div>
