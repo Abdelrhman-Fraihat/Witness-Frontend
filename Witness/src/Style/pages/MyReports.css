@@ -1,5 +1,5 @@
 .my-reports-page {
-  width: 100%;
+  width: 90%;
 }
 
 .my-reports-page {
@@ -50,6 +50,7 @@
   background: #1c2129;
   border-radius: 12px;
   overflow: hidden;
+  
 }
 
 
@@ -57,7 +58,7 @@
   white-space: nowrap;               /* ✅ prevents line break */
   font-size: 12px;
   font-weight: 600;
-  max-width: 40px;
+  max-width: 60px;
 }
 
 

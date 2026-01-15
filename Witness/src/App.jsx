@@ -12,8 +12,10 @@ import UserDashboard from "./Pages/UserDashboard";
 import MyReports from "./Pages/MyReports";
 import AddEditCrime from "./Pages/AddEditCrime";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
+import AdminCrimeReview from "./Pages/Admin/AdminCrimeReview";
 import MangeUsers from "./Pages/Admin/ManageUsers"
 import UserFilter from "./Componants/UserFilter";
+import Test from "./Componants/test";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path="*" element={<Login />} />
           <Route path="AdminDashboard" element={<AdminDashboard />} />
           <Route path="ManageUsers" element={<MangeUsers />} />
+          <Route path="test" element={<Test/>} />
+          <Route path="/AdminDashboard/AdminCrimeReview/:id" element={<AdminCrimeReview/>} />
         </Routes>
       </BrowserRouter>
     </>
