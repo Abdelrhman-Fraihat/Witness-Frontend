@@ -13,7 +13,7 @@ import MyReports from "./Pages/MyReports";
 import AddEditCrime from "./Pages/AddEditCrime";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import AdminCrimeReview from "./Pages/Admin/AdminCrimeReview";
-import MangeUsers from "./Pages/Admin/ManageUsers"
+import MangeUsers from "./Pages/Admin/ManageUsers";
 import UserFilter from "./Componants/UserFilter";
 import Test from "./Componants/test";
 
@@ -22,7 +22,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home/>}>
+          <Route element={<Layout />}>
             <Route path="UserFilter" element={<UserFilter />} />
             <Route path="AddEditCrime" element={<AddEditCrime />} />
             <Route path="MyReports" element={<MyReports />} />

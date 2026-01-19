@@ -1,47 +1,58 @@
-import react, { useState } from "react"
-import {Link} from "react-router-dom"
-import "../Style/pages/login.css"
+import react, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../Style/pages/login.css";
 
-function Login()
-{
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
 
-    function handleSubmit(e){
-        e.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-        console.log({email, password});
+    console.log({ email, password });
 
-        setEmail("");
-        setPassword("");
-        
-    }
-    
-    return(
-        <div className="Home">
-            <div className="container">
-            <div>
-                <span>Witness</span>
-                <span>⚖</span>
-            </div>
+    setEmail("");
+    setPassword("");
+  }
 
-            <h2>تسجيل الدخول إلى منصة شهادة</h2>
+  useEffect(()=> {
 
-                <form onSubmit={handleSubmit}>
-                    <p>البريد الالكتروني</p>
-                    <input type="text" placeholder="ادخل بريدك الالكتروني" value = {email} onChange={(e) => setEmail(e.target.value)}/>
-                    <br />
-                    <p>كلمة السر</p>
-                    <input type="password" placeholder = "ادخل كلمة المرور" value = {password} onChange={(e) => setPassword(e.target.value)}/>
-                    <br />
-                    <button type="submit">تسجيل الدخول</button>
-                </form>
-                <p>ليس لديك حساب؟</p>                <Link to = "/Register"> سجل الآن</Link>
+    fetch("http://localhost:3000/api/auth/login")
 
-            </div> 
+  }, []);
+
+  return (
+    <div className="Home">
+      <div className="container">
+        <div>
+          <span>Witness</span>
+          <span>⚖</span>
         </div>
-    )
-
+        <h2>تسجيل الدخول إلى منصة شهادة</h2>
+        <form onSubmit={handleSubmit}>
+          <p>البريد الالكتروني</p>
+          <input
+            type="text"
+            placeholder="ادخل بريدك الالكتروني"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <br />
+          <p>كلمة السر</p>
+          <input
+            type="password"
+            placeholder="ادخل كلمة المرور"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br />
+          <button type="submit">تسجيل الدخول</button>
+        </form>
+        <p>ليس لديك حساب؟</p> <Link to="/Register"> سجل الآن</Link>
+      </div>
+    </div>
+  );
 }
 
-export default Login
+export default Login;
