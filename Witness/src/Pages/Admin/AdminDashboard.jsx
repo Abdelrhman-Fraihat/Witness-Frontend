@@ -1,123 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../Style/Admin/AdminDashboard.css";
 import AdminNavBar from "../../Componants/AdminNavBar";
 import CrimesFilter from "../../Componants/CrimesFilter";
 import Pagination from "../../Componants/Pagination";
-import AdminCrimeReview from "../../Pages/Admin/AdminCrimeReview";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function AdminDashboard() {
+  const [crimes, setCrimes] = useState([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/user/crimes`)
+      .then((res) => res.json())
+      .then((data) => {
+        const pendingCrimes = data.filter(
+          (crime) => crime.status === "pending"
+        );
+        setCrimes(pendingCrimes);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  let ItemPerPage = 5;
-  const crimes = [
-    {
-      id: 1,
-      title: "قصف حي سكني",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-30",
-      status: "pending",
-    },
-    {
-      id: 2,
-      title: "استهداف مستشفى",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-28",
-      status: "pending",
-    },
-    {
-      id: 3,
-      title: "مجزرة بحق المدنيين",
-      country: "فلسطين",
-      city: "خان يونس",
-      date: "2023-10-25",
-      status: "pending",
-    },
-    {
-      id: 4,
-      title: "قصف حي سكني",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-30",
-      status: "pending",
-    },
-    {
-      id: 5,
-      title: "استهداف مستشفى",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-28",
-      status: "pending",
-    },
-    {
-      id: 6,
-      title: "مجزرة بحق المدنيين",
-      country: "فلسطين",
-      city: "خان يونس",
-      date: "2023-10-25",
-      status: "pending",
-    },
-    {
-      id: 7,
-      title: "قصف حي سكني",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-30",
-      status: "pending",
-    },
-    {
-      id: 8,
-      title: "استهداف مستشفى",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-28",
-      status: "pending",
-    },
-    {
-      id: 9,
-      title: "مجزرة بحق المدنيين",
-      country: "فلسطين",
-      city: "خان يونس",
-      date: "2023-10-25",
-      status: "pending",
-    },
-    {
-      id: 10,
-      title: "قصف حي سكني",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-30",
-      status: "pending",
-    },
-    {
-      id: 11,
-      title: "استهداف مستشفى",
-      country: "فلسطين",
-      city: "غزة",
-      date: "2023-10-28",
-      status: "pending",
-    },
-    {
-      id: 12,
-      title: "مجزرة بحق المدنيين",
-      country: "فلسطين",
-      city: "خان يونس",
-      date: "2023-10-25",
-      status: "pending",
-    },
-  ];
+
+  const ItemPerPage = 5;
 
   let filteredCrimes = crimes;
-  const start = (currentPage - 1) * ItemPerPage;
-  const end = start + ItemPerPage;
-  
+
   if (startDate !== "" && endDate !== "") {
     filteredCrimes = filteredCrimes.filter(
-      (crime) => crime.date >= startDate && crime.date <= endDate
+      (crime) =>
+        crime.incident_date >= startDate &&
+        crime.incident_date <= endDate
     );
   }
 
@@ -126,15 +43,16 @@ function AdminDashboard() {
       (crime) => crime.city === location
     );
   }
-    const totalPages = Math.ceil(filteredCrimes.length / ItemPerPage);
 
+  const start = (currentPage - 1) * ItemPerPage;
+  const end = start + ItemPerPage;
+  const totalPages = Math.ceil(filteredCrimes.length / ItemPerPage);
   const visibleCrimes = filteredCrimes.slice(start, end);
 
-
   function handleFilterSubmit(location, startDate, endDate) {
+    setLocation(location);
     setStartDate(startDate);
     setEndDate(endDate);
-    setLocation(location);
     setCurrentPage(1);
   }
 
@@ -142,11 +60,27 @@ function AdminDashboard() {
     setCurrentPage(pageNumber);
   }
 
+  const pendingCount = crimes.filter(
+    (crime) => crime.status === "pending"
+  ).length;
+
+  const approvedCount = crimes.filter(
+    (crime) => crime.status === "approved"
+  ).length;
+
+  const rejectedCount = crimes.filter(
+    (crime) => crime.status === "rejected"
+  ).length;
+
+  const totalCount = crimes.length;
+
   return (
     <>
-    <AdminNavBar/>
+      <AdminNavBar />
+
       <div className="admin-dashboard-page">
         <div className="admin-dashboard-container">
+
           <div className="admin-stats-grid">
             <div className="admin-stat-card">
               <div className="admin-stat-icon">
@@ -154,7 +88,7 @@ function AdminDashboard() {
               </div>
               <div className="admin-stat-content">
                 <span className="admin-stat-title">التقارير المرفوضة</span>
-                <span className="admin-stat-value">9</span>
+                <span className="admin-stat-value">{rejectedCount}</span>
                 <span className="admin-stat-sub">
                   تقارير تم رفضها بعد المراجعة
                 </span>
@@ -167,7 +101,7 @@ function AdminDashboard() {
               </div>
               <div className="admin-stat-content">
                 <span className="admin-stat-title">التقارير الموثقة</span>
-                <span className="admin-stat-value">1,180</span>
+                <span className="admin-stat-value">{approvedCount}</span>
                 <span className="admin-stat-sub">
                   تقارير تم التحقق منها وتوثيقها
                 </span>
@@ -180,7 +114,7 @@ function AdminDashboard() {
               </div>
               <div className="admin-stat-content">
                 <span className="admin-stat-title">التقارير المعلقة</span>
-                <span className="admin-stat-value">45</span>
+                <span className="admin-stat-value">{pendingCount}</span>
                 <span className="admin-stat-sub">
                   تقارير تنتظر المراجعة والتوثيق
                 </span>
@@ -193,7 +127,7 @@ function AdminDashboard() {
               </div>
               <div className="admin-stat-content">
                 <span className="admin-stat-title">إجمالي التقارير</span>
-                <span className="admin-stat-value">1,234</span>
+                <span className="admin-stat-value">{totalCount}</span>
                 <span className="admin-stat-sub">
                   عدد التقارير الكلي في النظام
                 </span>
@@ -224,35 +158,47 @@ function AdminDashboard() {
               </thead>
 
               <tbody>
-                {visibleCrimes.map((crime) => (
-                  <tr key={crime.id}>
-                    <td>{crime.title}</td>
-                    <td>{crime.country}</td>
-                    <td>{crime.city}</td>
-                    <td>{crime.date}</td>
-                    <td>
-                      <span className={`admin-status admin-${crime.status}`}>
-                        {crime.status === "approved" && "موثق"}
-                        {crime.status === "pending" && "قيد المراجعة"}
-                        {crime.status === "rejected" && "مرفوض"}
-                      </span>
-                    </td>
-                    <td className="admin-actions">
-                      <Link to = {`/AdminDashboard/AdminCrimeReview/${crime.id}`}>
-                      <i className="bi bi-eye"></i>
-                      </Link>
-                      <i className="bi bi-check-lg"></i>
-                      <i className="bi bi-x-lg"></i>
-                    </td>
+                {visibleCrimes.length === 0 ? (
+                  <tr>
+                    <td colSpan="6">لا توجد تقارير حالياً</td>
                   </tr>
-                ))}
+                ) : (
+                  visibleCrimes.map((crime) => (
+                    <tr key={crime.id}>
+                      <td>{crime.title}</td>
+                      <td>{crime.country}</td>
+                      <td>{crime.city}</td>
+                      <td>{crime.incident_date?.slice(0, 10)}</td>
+                      <td>
+                        <span
+                          className={`admin-status admin-${crime.status}`}
+                        >
+                          {crime.status === "approved" && "موثق"}
+                          {crime.status === "pending" && "قيد المراجعة"}
+                          {crime.status === "rejected" && "مرفوض"}
+                        </span>
+                      </td>
+                      <td className="admin-actions">
+                        <Link to={`/AdminCrimeReview/${crime.id}`}>
+                          <i className="bi bi-eye"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
+
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
-      <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
     </>
   );
 }
+
 export default AdminDashboard;

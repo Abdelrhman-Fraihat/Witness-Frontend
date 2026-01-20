@@ -75,6 +75,7 @@ body {
   margin-bottom: 100px;
   text-align: center;
   direction: rtl;
+  margin-top: 20px;
 
   /* Prevent weird overflow on small screens */
   overflow: hidden;

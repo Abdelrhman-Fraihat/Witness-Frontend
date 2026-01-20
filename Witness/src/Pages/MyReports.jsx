@@ -1,103 +1,116 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../Style/pages/MyReports.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import Layout from "../Componants/Layout";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function MyReports() {
-  const reports = [
-    {
-      id: 1,
-      title: "استهداف حي سكني في غزة",
-      type: "قصف جوي",
-      date: "2023-10-28",
-      status: "accepted",
-    },
-    {
-      id: 2,
-      title: "قصف منزل مدني",
-      type: "غارات جوية",
-      date: "2023-11-15",
-      status: "pending",
-    },
-    {
-      id: 3,
-      title: "استهداف مسجد",
-      type: "قصف بري",
-      date: "2023-12-01",
-      status: "rejected",
-    },
-    {
-      id: 4,
-      title: "استهداف مستشفى",
-      type: "قصف جوي",
-      date: "2024-01-10",
-      status: "accepted",
-    },
-    {
-      id: 5,
-      title: "قصف مدرسة",
-      type: "غارات جوية",
-      date: "2024-02-22",
-      status: "pending",
-    },
-  ];
+  const navigate = useNavigate();
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) return;
+
+    fetch(`${BASE_URL}/api/user/crimes/user/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setReports(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  async function handleDelete(crimeId) {
+    const report = reports.find((r) => r.id === crimeId);
+
+    const confirmDelete = window.confirm("هل أنت متأكد من حذف التقرير؟");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/api/user/deleteCrime/${crimeId}`,
+        { method: "DELETE" },
+      );
+
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert("خطأ في الخادم");
+    }
+  }
 
   return (
     <>
-    <div className="my-reports-page">
-      <div className="my-reports-container">
-        {/* ===== Header ===== */}
-        <div className="reports-header">
-          <h2 className="page-title">تقاريري</h2>
+      <div className="my-reports-page">
+        <div className="my-reports-container">
+          <div className="reports-header">
+            <h2 className="page-title">تقاريري</h2>
 
-          <button className="add-report-btn">
-            <i className="bi bi-plus-lg"></i>
-            إضافة تقرير
-          </button>
-        </div>
+            <Link to="/AddCrimes">
+              <button className="add-report-btn">
+                <i className="bi bi-plus-lg"></i>
+                إضافة تقرير
+              </button>
+            </Link>
+          </div>
 
-        {/* ===== Table ===== */}
-        <div className="reports-table-card">
-    <table>
-  <thead>
-    <tr>
-      <th>العنوان</th>
-      <th>النوع</th>
-      <th>التاريخ</th>
-      <th>الحالة</th>
-      <th>الإجراءات</th>
-    </tr>
-  </thead>
+          <div className="reports-table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>العنوان</th>
+                  <th>النوع</th>
+                  <th>التاريخ</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
 
-  <tbody>
-    {reports.map((report) => (
-      <tr key={report.id}>
-        <td>{report.title}</td>
-        <td>{report.type}</td>
-        <td>{report.date}</td>
+              <tbody>
+                {reports.length === 0 ? (
+                  <tr>
+                    <td colSpan="5">لا توجد تقارير بعد</td>
+                  </tr>
+                ) : (
+                  reports.map((report) => (
+                    <tr key={report.id}>
+                      <td>{report.title}</td>
+                      <td>{report.crime_type}</td>
+                      <td>{report.incident_date?.slice(0, 10)}</td>
 
-        <td>
-          <span className={`status ${report.status}`}>
-            {report.status === "accepted" && "مقبول"}
-            {report.status === "pending" && "قيد المراجعة"}
-            {report.status === "rejected" && "مرفوض"}
-          </span>
-        </td>
+                      <td>
+                        <span className={`status ${report.status}`}>
+                          {report.status === "approved" && "مقبول"}
+                          {report.status === "pending" && "قيد المراجعة"}
+                          {report.status === "rejected" && "مرفوض"}
+                        </span>
+                      </td>
 
-        <td className="actions">
-          <i className="bi bi-eye"></i>
-          <i className="bi bi-pencil"></i>
-          <i className="bi bi-trash"></i>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+                      <td className="actions">
+                        <i
+                          className="bi bi-eye"
+                          onClick={() => navigate(`/CrimeDetails/${report.id}`)}
+                        ></i>
 
+                        <i
+                          className="bi bi-pencil"
+                          onClick={() => navigate(`/EditCrimes/${report.id}`)}
+                        ></i>
+
+                        <i
+                          className="bi bi-trash"
+                          onClick={() => handleDelete(report.id)}
+                        ></i>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
+
 export default MyReports;

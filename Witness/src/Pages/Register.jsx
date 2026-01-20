@@ -1,19 +1,47 @@
 import react, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../Style/pages/login.css"; // reuse the SAME css file
+import { Link, useNavigate } from "react-router-dom";
+import "../Style/pages/login.css";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Register() {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-    console.log({ fullName, email, password, confirmPassword });
+    try {
+      const response = await fetch(`${BASE_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, email, password }),
+      });
 
-    setFullName("");
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.message || "Signup failed");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(result.user));
+
+      navigate("/home");
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    }
+
+    setFirstName("");
+    setLastName("");
     setEmail("");
     setPassword("");
     setConfirmPassword("");
@@ -30,12 +58,20 @@ function Register() {
         <h2>انشاء حساب جديد في منصة شهادة</h2>
 
         <form onSubmit={handleSubmit}>
-          <p>الاسم الكامل</p>
+          <p>الاسم</p>
           <input
             type="text"
             placeholder="أدخل اسمك الكامل"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <p>اسم العائلة</p>
+
+          <input
+            type="text"
+            placeholder="أدخل اسمك الكامل"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
 
           <p>البريد الإلكتروني</p>

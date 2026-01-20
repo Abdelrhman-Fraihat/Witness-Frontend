@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
 function Layout() {
+  const username = JSON.parse(localStorage.getItem("user"));
   return (
     <>
       <Navbar
@@ -34,7 +35,7 @@ function Layout() {
               <Nav.Link as={Link} to="/MyReports">
                 تقاريري
               </Nav.Link>
-              <Nav.Link as={Link} to="/UserDashBoard/عبدالرحمن">
+              <Nav.Link as={Link} to={`/UserDashBoard/${username.first_name}`}>
                 الملف الشخصي
               </Nav.Link>
             </Nav>

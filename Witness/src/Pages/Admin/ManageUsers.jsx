@@ -1,91 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserFilter from "../../Componants/UserFilter";
 import UpdateStatus from "../../Componants/UpdateStatus";
 import AdminNavBar from "../../Componants/AdminNavBar";
 import "../../Style/Admin/ManageUsers.css";
-
-const allUsers = [
-  {
-    id: 1,
-    firstName: "أحمد",
-    lastName: "علي",
-    Email: "ahmad@gmail.com",
-    state: "نشط",
-  },
-  {
-    id: 2,
-    firstName: "أحمد",
-    lastName: "",
-    Email: "ahmad@gmail.com",
-    state: "نشط",
-  },
-  {
-    id: 3,
-    firstName: "أحمد",
-    lastName: "مصطفى",
-    Email: "ahmad@gmail.com",
-    state: "نشط",
-  },
-  {
-    id: 4,
-    firstName: "مصطفى",
-    lastName: "أحمد",
-    Email: "ahmad@gmail.com",
-    state: "نشط",
-  },
-  {
-    id: 5,
-    firstName: "مصطفى",
-    lastName: "",
-    Email: "ahmad@gmail.com",
-    state: "معطل",
-  },
-];
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function ManageUsers() {
-  const [usersFirstName, setUsersFirstName] = useState("");
-  const [users, setUsers] = useState(allUsers);
+  const [users, setUsers] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  let filteredUsers = users;
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/admin/users`, {
+      headers: {
+        "x-role": "admin",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setUsers(data))
+      .catch((err) => console.error(err));
+  }, []);
 
-  if (usersFirstName !== "") {
-    filteredUsers = filteredUsers.filter((user) => {
-      if (
-        user.firstName === usersFirstName ||
-        user.lastName === usersFirstName
-      ) {
-        return user;
-      }
-    });
-  }
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.first_name} ${user.last_name || ""}`;
+    return fullName.includes(searchName);
+  });
 
-  function handleOnChangeUser(e) {
-    setUsersFirstName(e.target.value);
-  }
-
-  function handleChangeState(id, value) {
-    const updatedUsers = users.map((user) => {
-      if (user.id === id) {
-        return { ...user, state: value };
-      }
-      return user;
-    });
-
-    setUsers(updatedUsers);
+  function handleChangeState(id, newState) {
+    fetch(`${BASE_URL}/api/admin/users/${id}/state`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-role": user.role
+      },
+      body: JSON.stringify({ state: newState }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers((prev) =>
+          prev.map((user) => (user.id === id ? data.user : user)),
+        );
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
     <>
-    <AdminNavBar/>
+      <AdminNavBar />
+
       <div className="manage-users">
         <div className="header">
           <h2>إدارة المستخدمين</h2>
-          <UserFilter value={usersFirstName} onChange={handleOnChangeUser} />
-          <UpdateStatus
-            filteredUsers={filteredUsers}
-            onChangeState={handleChangeState}
+
+          <UserFilter
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
           />
         </div>
+
+        <UpdateStatus
+          filteredUsers={filteredUsers}
+          onChangeState={handleChangeState}
+        />
       </div>
     </>
   );

@@ -1,7 +1,11 @@
 import React from "react";
 import "../Style/Admin/ManageUsers.css"
 
-function UpdateStatus({filteredUsers, onChangeState}) {
+function UpdateStatus({ filteredUsers, onChangeState }) {
+  if (filteredUsers.length === 0) {
+    return <p style={{ textAlign: "center" }}>لا يوجد مستخدمون</p>;
+  }
+
   return (
     <div className="table-wrapper">
       <table>
@@ -17,29 +21,30 @@ function UpdateStatus({filteredUsers, onChangeState}) {
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td>{`${user.firstName} ${user.lastName}`}</td>
-              <td>{user.Email}</td>
+              <td>{`${user.first_name} ${user.last_name || ""}`}</td>
+              <td>{user.email}</td>
 
               <td>
                 <span
                   className={`status ${
-                    user.state === "نشط" ? "active" : "disabled"
+                    user.state === "active" ? "active" : "disabled"
                   }`}
                 >
-                  {user.state}
+                  {user.state === "active" ? "نشط" : "معطل"}
                 </span>
               </td>
 
               <td className="actions">
-                <span className="actionsDots">⋯</span>
-
                 <select
                   className="actionsSelect"
                   value={user.state}
-                  onChange={(e) => onChangeState(user.id, e.target.value)}
+                  onChange={(e) =>
+                    onChangeState(user.id, e.target.value)
+                  }
+                  disabled={user.role === "admin"} // حماية الأدمن
                 >
-                  <option value="نشط">نشط</option>
-                  <option value="معطل">معطل</option>
+                  <option value="active">نشط</option>
+                  <option value="disabled">معطل</option>
                 </select>
               </td>
             </tr>

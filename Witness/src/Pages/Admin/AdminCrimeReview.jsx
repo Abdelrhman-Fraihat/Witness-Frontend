@@ -1,61 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../../Style/Admin/AdminCrimeReview.css";
 import AdminNavBar from "../../Componants/AdminNavBar";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const user = JSON.parse(localStorage.getItem("user"));
+
 function AdminCrimeReview() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [crime, setCrime] = useState(null);
 
-  const crimes = [
-    {
-      id: 1,
-      title: "سرقة بنك في وضح النهار",
-      country: "المملكة العربية السعودية",
-      city: "الرياض",
-      date: "2023-10-26",
-      status: "pending",
-      reporterName: "أحمد فهد",
-      reporterEmail: "ahmed.fahad@example.com",
-      description: "وصف تفصيلي هنا...",
-      notes: "",
-      media: [
-        "https://picsum.photos/id/1060/900/600",
-        "https://picsum.photos/id/1011/900/600",
-        "https://picsum.photos/id/1025/900/600",
-      ],
-    },
-    // ...
-  ];
-
   useEffect(() => {
-    const foundCrime = crimes.find((c) => c.id === Number(id));
-    setCrime(foundCrime);
-  }, [id]);
-  if (!crime) {
-    return (
-      <div style={{ direction: "rtl", color: "white", padding: 20 }}>
-        جاري التحميل...
-      </div>
+    fetch(`${NEWS_URL}/api/user/crimes/${id}`)
+      .then((crime) => crime.json())
+      .then((data) => setCrime(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  async function updateStatus(newStatus) {
+    window.confirm(newStatus === "approved"
+        ? "هل أنت متأكد من توثيق التقرير؟"
+        : "هل أنت متأكد من رفض التقرير؟",
     );
+    
+    try {
+      const res = await fetch(
+        `${BASE_URL}/api/admin/crimes/${id}/status`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json","x-role": user.role },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+
+    } catch (err) {
+      console.error(err);
+      alert("خطأ في الخادم");
+    }
   }
+
+  if (!crime) {
+    return <div style={{ direction: "rtl", padding: 20 }}>جاري التحميل...</div>;
+  }
+
   return (
     <>
       <AdminNavBar />
+
       <div className="crime-review-page" dir="rtl">
         <div className="crime-review-container">
           <h1 className="crime-review-title">{crime.title}</h1>
 
           <div className="crime-review-layout">
-            {/* LEFT */}
             <div>
-              {/* معلومات الجريمة */}
               <div className="crime-card">
                 <h3 className="crime-card-title">معلومات الجريمة</h3>
 
                 <div className="crime-grid">
                   <span className="crime-label">التاريخ</span>
-                  <span className="crime-value">{crime.date}</span>
+                  <span className="crime-value">
+                    {crime.incident_date?.slice(0, 10)}
+                  </span>
 
                   <span className="crime-label">الدولة</span>
                   <span className="crime-value">{crime.country}</span>
@@ -74,26 +81,23 @@ function AdminCrimeReview() {
                 </div>
               </div>
 
-              {/* معلومات المبلغ */}
               <div className="crime-card">
                 <h3 className="crime-card-title">معلومات المبلغ</h3>
 
                 <div className="crime-grid">
                   <span className="crime-label">اسم المبلغ</span>
-                  <span className="crime-value">{crime.reporterName}</span>
+                  <span className="crime-value">{crime.reporter}</span>
 
                   <span className="crime-label">البريد الإلكتروني</span>
-                  <span className="crime-value">{crime.reporterEmail}</span>
+                  <span className="crime-value">{crime.email || "-"}</span>
                 </div>
               </div>
 
-              {/* الوصف */}
               <div className="crime-card">
                 <h3 className="crime-card-title">الوصف التفصيلي</h3>
                 <p className="crime-description">{crime.description}</p>
               </div>
 
-              {/* معرض الوسائط */}
               <div className="crime-card">
                 <h3 className="crime-card-title">معرض الوسائط</h3>
 
@@ -101,7 +105,7 @@ function AdminCrimeReview() {
                   <div className="crime-media-grid">
                     {crime.media.map((src, idx) => (
                       <div className="crime-media-item" key={idx}>
-                        <img src={src} alt="" />
+                        <img src={`${BASE_URL}${src}`} alt="" />
                       </div>
                     ))}
                   </div>
@@ -111,17 +115,24 @@ function AdminCrimeReview() {
               </div>
             </div>
 
-            {/* RIGHT SIDEBAR */}
             <div className="crime-side-panel">
-              <button className="crime-btn primary">توثيق</button>
-              <button className="crime-btn">رفض</button>
-              <button className="crime-btn danger">حذف</button>
+              <button
+                className="crime-btn primary"
+                onClick={() => updateStatus("approved")}
+              >
+                توثيق
+              </button>
 
-              <h4 className="notes-title">ملاحظات المسؤول</h4>
-              <textarea
-                className="notes-textarea"
-                placeholder="...اكتب ملاحظاتك هنا"
-              />
+              <button
+                className="crime-btn"
+                onClick={() => updateStatus("rejected")}
+              >
+                رفض
+              </button>
+
+              <button className="crime-btn" onClick={() => navigate(-1)}>
+                رجوع
+              </button>
             </div>
           </div>
         </div>
