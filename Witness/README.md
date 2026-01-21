@@ -1,18 +1,78 @@
-# React + Vite
+# 🕵️ Witness Frontend (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for **Witness**, a full-stack web application built with **React + Vite**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Description
 
-## React Compiler
+Witness helps users **submit and document crime/incident reports** with media evidence, while admins **review and moderate** submitted reports.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+The system supports two types of users:
 
-Note: This will impact Vite dev & build performances.
+### 👤 Regular Users
+- Submit a crime report (with up to 3 images)
+- View approved crimes in Home/Explore
+- View crime details (including media)
+- Track their own reports and statuses (My Reports / Dashboard)
+- Delete their own reports
 
-## Expanding the ESLint configuration
+### 🛡️ Admins
+- View pending crime reports
+- Review full crime details + media
+- Approve (توثيق) or Reject reports
+- Manage users (activate / deactivate accounts)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Data is persisted in the backend using **PostgreSQL** and media is served from the backend uploads folder.
+
+---
+
+## 🧑‍💻 User Requirements
+
+### ✅ Authentication
+- Login and Sign Up using email and password
+- Role-based flow (**user / admin**)
+- The app remembers login sessions using **localStorage**
+
+### ✅ Regular User Features
+- Create a crime report with:
+  - Title, city, date (required)
+  - Type, description, short description, country (optional)
+- Upload up to **3 images**
+- View all **approved** crimes
+- View crime details page
+- View personal reports + status:
+  - pending / approved / rejected
+- Delete a report
+
+### ✅ Admin Features
+- View all pending crimes in Admin Dashboard
+- Review each report (details + media)
+- Approve or Reject a report (status update)
+- View all users
+- Activate / Deactivate user accounts
+
+---
+
+## 🛠️ Technologies
+- React 19
+- Vite
+- React Router DOM
+- Fetch API
+- LocalStorage (for session persistence)
+- Bootstrap Icons (UI icons)
+
+---
+
+## NEWS API KEY:
+```
+https://newsapi.org/v2/everything?q=Gaza&language=ar&apiKey=af7fcad65adb4774bd67ad77d15dda8f
+```
+
+## 🚀 Getting Started
+
+### 1) Install dependencies
+```bash
+cd Witness
+npm install
+npm run dev
